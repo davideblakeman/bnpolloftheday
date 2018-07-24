@@ -1,0 +1,10 @@
+.bnpolloftheday_viewResultsBtn {
+    cursor:pointer;
+    height:30px;
+    width:100px;
+    background-color:brown;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+}
