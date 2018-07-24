@@ -8,7 +8,7 @@ class BNPollOfTheDay_Class
 	function __construct()
 	{
 		$this->poll = new stdClass();
-		$this->poll->test = 'title';
+		$this->poll->test = 'title!?';
 	}
 
 	function __get( $var )
