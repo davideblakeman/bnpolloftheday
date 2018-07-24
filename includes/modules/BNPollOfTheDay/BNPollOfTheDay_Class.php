@@ -1,5 +1,10 @@
 <?php
 
+if ( !defined( 'ABSPATH' ) )
+{
+	die();
+}
+
 class BNPollOfTheDay_Class
 {
 	public $id; // the id of the poll

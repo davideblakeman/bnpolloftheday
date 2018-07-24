@@ -1,4 +1,10 @@
 <?php
+
+if ( !defined( 'ABSPATH' ) )
+{
+	die();
+}
+
 /*
 Plugin Name: bnpolloftheday
 Plugin URI:  example.com

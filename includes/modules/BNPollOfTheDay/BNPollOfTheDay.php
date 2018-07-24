@@ -1,5 +1,10 @@
 <?php
 
+if ( !defined( 'ABSPATH' ) )
+{
+	die();
+}
+
 class BNPollOfTheDay extends ET_Builder_Module {
 
 	public $slug       = 'bnpotd_bnpolloftheday';
@@ -63,7 +68,7 @@ class BNPollOfTheDay extends ET_Builder_Module {
 		</div>';
 
 		return sprintf(
-			$script . $style . $html
+			$html
 		);
 
 		/*return sprintf(

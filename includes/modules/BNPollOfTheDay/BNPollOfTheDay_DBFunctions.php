@@ -1,5 +1,10 @@
 <?php
 
+if ( !defined( 'ABSPATH' ) )
+{
+	die();
+}
+
     class BNPollOfTheDayDB
     {
         public function getPotdData()
