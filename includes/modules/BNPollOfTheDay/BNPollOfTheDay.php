@@ -1,9 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) )
-{
-	die();
-}
+if ( !defined( 'ABSPATH' ) ) die();
 
 class BNPollOfTheDay extends ET_Builder_Module {
 

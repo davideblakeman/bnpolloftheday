@@ -1,9 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) )
-{
-	die();
-}
+if ( !defined( 'ABSPATH' ) ) die();
 
 /*
 Plugin Name: bnpolloftheday
@@ -41,6 +38,9 @@ define( 'BNPOLLOFTHEDAY_PATH', plugin_dir_path( BNPOLLOFTHEDAY_MAIN_FILE ) );
 
 require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/BNPollOfTheDay_Class.php';
 require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/BNPollOfTheDay_DBFunctions.php';
+require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/upgrade-activate-functions.php';
+
+register_activation_hook( BNPOLLOFTHEDAY_MAIN_FILE, 'bnpolloftheday_activate' );
 
 if ( ! function_exists( 'bnpotd_initialize_extension' ) ):
 /**
@@ -63,9 +63,9 @@ endif;
 function bnpolloftheday_setTables()
 {
 	global $wpdb;
-	$wpdb->bnpollofthday_questions   = $wpdb->prefix .'bnpollofthday_questions';
-	$wpdb->bnpollofthday_options   = $wpdb->prefix .'bnpollofthday_options';
-	$wpdb->bnpollofthday_iplog = $wpdb->prefix .'bnpollofthday_iplog';
+	$wpdb->bnpolloftheday_questions   = $wpdb->prefix .'bnpolloftheday_questions';
+	$wpdb->bnpolloftheday_options   = $wpdb->prefix .'bnpolloftheday_options';
+	$wpdb->bnpolloftheday_iplog = $wpdb->prefix .'bnpolloftheday_iplog';
 }
 
 function bnpolloftheday_initScriptStyle()
