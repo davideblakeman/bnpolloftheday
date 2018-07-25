@@ -59,9 +59,8 @@ function bnpolloftheday_tablesSettings()
 		$wpdb->insert( $wpdb->bnpolloftheday_questions, array(
 			/*'question'		=> __( 'What is your opinion on advertising on websites?', 'bnpolloftheday' ),*/
 			'question'		=> 'What is your opinion on advertising on websites?',
-			'time_added'	=> current_time( 'mysql' ),
-			#'end_time'		=> strtotime( "+1 DAY", current_time( 'timestamp' ) ),
-			'end_time'		=> 0,
+			'time_added'	=> date( 'Y-m-d H:m:s', current_time( 'timestamp' ) ), //current_time( 'mysql' ) gets the hours and minutes wrong
+			'end_time'		=> date( 'Y-m-d H:m:s', strtotime( '+1 DAY', current_time( 'timestamp' ) ) ),
 			'added_by_user'	=> get_current_user_id(),
 			'vote_count'	=> 0,
 			'active'		=> 1

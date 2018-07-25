@@ -4,7 +4,38 @@ if ( !defined( 'ABSPATH' ) ) die();
 
     class BNPollOfTheDayDB
     {
-        public function getPotdData()
+        public function getPollById( $qid )
+        {
+            global $wpdb;
+            $wpdb->show_errors();
+            #print_r( $wpdb->queries );
+
+            #$result = $wpdb->get_results('SELECT question FROM ' . $wpdb->bnpolloftheday_questions . ' WHERE qid = ' . $qid );
+
+            $result = $wpdb->get_results('
+                SELECT q.qid, q.question, q.vote_count, o.oid, o.option, o.votes 
+                FROM ' . $wpdb->bnpolloftheday_questions . ' q 
+                JOIN wp_bnpolloftheday_options o ON q.qid = o.qid
+                WHERE q.qid = ' . $qid
+            );
+
+            #echo '<pre>';
+            #print_r( $wpdb->queries );
+
+            return $result;
+        }
+
+        public function getOtherDataExample()
+        {
+            $mydb = new wpdb( 'username', 'password', 'my_database', 'localhost' );
+
+            $mydb->query('DELETE FROM external_table WHERE id = 1');
+
+            /* Switch to another database with same credentials */
+            $wpdb->select('my_database');
+        }
+
+        public function getPotdDataExample()
         {
             $link = mysqli_connect( "localhost", "root", "", "wordpressdb" );
             $results = [];
@@ -36,7 +67,7 @@ if ( !defined( 'ABSPATH' ) ) die();
             return $results;
         }
 
-        public function getPotdWpData()
+        public function getPotdWpDataExample()
         {
             global $wpdb;
             $wpdb->show_errors();
@@ -50,7 +81,7 @@ if ( !defined( 'ABSPATH' ) ) die();
             return $result[0]->post_content;
         }
 
-        public function postPotdData()
+        public function postPotdDataExample()
         {
             global $wpdb;
             $wpdb->show_errors();
@@ -104,16 +135,6 @@ if ( !defined( 'ABSPATH' ) ) die();
                     $key
                 )
             );
-        }
-
-        public function getOtherData()
-        {
-            $mydb = new wpdb( 'username', 'password', 'my_database', 'localhost' );
-
-            $mydb->query('DELETE FROM external_table WHERE id = 1');
-
-            /* Switch to another database with same credentials */
-            $wpdb->select('my_database');
         }
 
         function prefix_create_table()
