@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) die();
+//if ( !defined( 'ABSPATH' ) ) die();
 
 class BNPollOfTheDay extends ET_Builder_Module {
 
@@ -13,8 +13,26 @@ class BNPollOfTheDay extends ET_Builder_Module {
 		'author_uri' => 'example.com/author',
 	);
 
-	public function init() {
+	public function init()
+	{
 		$this->name = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
+		$this->child_slug      = 'bnpolloftheday_item';
+		$this->child_item_text = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
+
+		$this->settings_modal_toggles = array(
+			'general'  => array(
+				'toggles' => array(
+					'main_content' => esc_html__( 'Text', 'bnpotd-bnpolloftheday-ex' ),
+					'test' => esc_html__( 'Text', 'bnpotd-bnpolloftheday-ex' ),
+					'background'   => esc_html__( 'Background', 'bnpotd-bnpolloftheday-ex' ),
+				),
+			),
+			'advanced' => array(
+				'toggles' => array(
+					'bar'        => esc_html__( 'Bar Counter', 'bnpotd-bnpolloftheday-ex' ),
+				),
+			),
+		);
 	}
 
 	public function get_fields()
@@ -49,6 +67,13 @@ class BNPollOfTheDay extends ET_Builder_Module {
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input your desired heading here.', 'bnpotd-bnpolloftheday-ex' ),
+				'toggle_slug'     => 'main_content',
+			),			
+			'title2'     => array(
+				'label'           => esc_html__( 'Title2', 'bnpotd-bnpolloftheday-ex' ),
+				'type'            => 'text',
+				'option_category' => 'basic_option',
+				'description'     => esc_html__( 'Input your desired 2nd heading here.', 'bnpotd-bnpolloftheday-ex' ),
 				'toggle_slug'     => 'main_content',
 			),
 		);
@@ -98,6 +123,11 @@ class BNPollOfTheDay extends ET_Builder_Module {
 			$question,
 			$totalVotes
 		);
+
+		/*return sprintf(
+			#print_r($this->get_settings_modal_toggles())
+			print_r($this)
+		);*/
 
 		/*return sprintf(
 			$html

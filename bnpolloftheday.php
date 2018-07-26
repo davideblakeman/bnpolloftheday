@@ -43,21 +43,21 @@ require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/upgrade-acti
 register_activation_hook( BNPOLLOFTHEDAY_MAIN_FILE, 'bnpolloftheday_activate' );
 
 if ( ! function_exists( 'bnpotd_initialize_extension' ) ):
-/**
- * Creates the extension's main class instance.
- *
- * @since 1.0.0
- */
-function bnpotd_initialize_extension()
-{
-	require_once plugin_dir_path( __FILE__ ) . 'includes/Bnpolloftheday.php';
+	/**
+	 * Creates the extension's main class instance.
+	 *
+	 * @since 1.0.0
+	 */
+	function bnpotd_initialize_extension()
+	{
+		require_once plugin_dir_path( __FILE__ ) . 'includes/Bnpolloftheday.php';
 
-	//Plugin starts here...
+		//Plugin starts here...
 
-	bnpolloftheday_setTables();
-}
-add_action( 'divi_extensions_init', 'bnpotd_initialize_extension' );
-add_action( 'wp_enqueue_scripts', 'bnpolloftheday_initScriptStyle' );
+		bnpolloftheday_setTables();
+	}
+	add_action( 'divi_extensions_init', 'bnpotd_initialize_extension' );
+	add_action( 'wp_enqueue_scripts', 'bnpolloftheday_initScriptStyle' );
 endif;
 
 function bnpolloftheday_setTables()

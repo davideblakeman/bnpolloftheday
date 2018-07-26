@@ -12,9 +12,8 @@ class BNPollOfTheDay extends Component {
   render() {
     return (
       <Fragment>
-        <h1>{this.testStr}</h1>
         <h1>
-          {this.props.content()}
+          ...BNPollOfTheDay.jsx placeholder...
         </h1>
       </Fragment>
     );
