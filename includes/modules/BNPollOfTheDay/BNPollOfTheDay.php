@@ -1,25 +1,34 @@
 <?php
 
-//if ( !defined( 'ABSPATH' ) ) die();
+if ( !defined( 'ABSPATH' ) ) die();
+include_once plugin_dir_path( __FILE__ ) . 'BNPollOfTheDayItem.php';
 
 class BNPollOfTheDay extends ET_Builder_Module {
 
-	public $slug       = 'bnpotd_bnpolloftheday';
-	public $vb_support = 'on';
+	#public $slug       = 'bnpotd_bnpolloftheday';
+	#public $vb_support = 'on';
 
-	protected $module_credits = array(
+	/*protected $module_credits = array(
 		'module_uri' => 'example.com',
 		'author'     => 'Blakeman & Nawoor',
 		'author_uri' => 'example.com/author',
-	);
+	);*/
 
 	public function init()
 	{
-		$this->name = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
-		$this->child_slug      = 'bnpolloftheday_item';
-		$this->child_item_text = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
+		$this->module_credits = array(
+			'module_uri' => 'example.com',
+			'author'     => 'Blakeman & Nawoor',
+			'author_uri' => 'example.com/author',
+		);
 
-		$this->settings_modal_toggles = array(
+		$this->name = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
+		$this->slug = 'bnpotd_bnpolloftheday';
+		$this->vb_support      = 'on';
+		$this->child_slug      = 'bnpotd_bnpolloftheday_item';
+		#$this->child_item_text = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
+
+		/*$this->settings_modal_toggles = array(
 			'general'  => array(
 				'toggles' => array(
 					'main_content' => esc_html__( 'Text', 'bnpotd-bnpolloftheday-ex' ),
@@ -32,7 +41,7 @@ class BNPollOfTheDay extends ET_Builder_Module {
 					'bar'        => esc_html__( 'Bar Counter', 'bnpotd-bnpolloftheday-ex' ),
 				),
 			),
-		);
+		);*/
 	}
 
 	public function get_fields()
@@ -62,18 +71,12 @@ class BNPollOfTheDay extends ET_Builder_Module {
 		);*/
 
 		return array(
-			'title'     => array(
-				'label'           => esc_html__( 'Title', 'bnpotd-bnpolloftheday-ex' ),
-				'type'            => 'text',
+			'content'     => array(
+				'label'           => esc_html__( 'Content', 'bnpotd-bnpolloftheday-ex' ),
+				#'type'            => 'text',
+				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input your desired heading here.', 'bnpotd-bnpolloftheday-ex' ),
-				'toggle_slug'     => 'main_content',
-			),			
-			'title2'     => array(
-				'label'           => esc_html__( 'Title2', 'bnpotd-bnpolloftheday-ex' ),
-				'type'            => 'text',
-				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'Input your desired 2nd heading here.', 'bnpotd-bnpolloftheday-ex' ),
 				'toggle_slug'     => 'main_content',
 			),
 		);
@@ -93,15 +96,15 @@ class BNPollOfTheDay extends ET_Builder_Module {
 		#$test2 = date( 'Y-m-d H:m:s', strtotime( '+1 DAY', current_time( 'timestamp' ) ) );
 		#$test2 = $this->props[ 'content' ];
 		#$test3 = $this->props[ 'test' ];
-		$title = $this->props[ 'title' ];
+		$title = $this->content;
 		$question = $poll[0]->question;
 		$totalVotes = $poll[0]->vote_count;
 
 		$html = '
 			<div class="bnpolloftheday_container">
 				<h1>%1$s</h1>
-				<h3>%2$s</h3>
-				<h5>Vote Count: %3$s</h5>';
+				<h2>%2$s</h2>
+				<h5>Total Vote Count: %3$s</h5>';
 
 		foreach( $poll as $p )
 		{
