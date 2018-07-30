@@ -25,6 +25,19 @@ if ( !defined( 'ABSPATH' ) ) die();
             return $result;
         }
 
+        public function getAllPollQuestions()
+        {
+            global $wpdb;
+            $wpdb->show_errors();
+
+            $result = $wpdb->get_results('
+                SELECT qid, question
+                FROM ' . $wpdb->bnpolloftheday_questions . '
+            ');
+
+            return $result;
+        }
+
         public function getOtherDataExample()
         {
             $mydb = new wpdb( 'username', 'password', 'my_database', 'localhost' );

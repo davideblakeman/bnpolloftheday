@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) die();
 class BNPollOfTheDay_Item extends ET_Builder_Module
 {
 	function init() {
-		$this->name                        = esc_html__( 'BNPotD Poll Option', 'bnpotd-bnpolloftheday-ex' );
+		$this->name                        = esc_html__( 'BNPotD Poll', 'bnpotd-bnpolloftheday-ex' );
 		$this->slug                        = 'bnpotd_bnpolloftheday_item';
 		$this->vb_support                  = 'on';
 		$this->type                        = 'child';
@@ -13,6 +13,7 @@ class BNPollOfTheDay_Item extends ET_Builder_Module
 		$this->advanced_setting_title_text = esc_html__( 'Poll Option', 'bnpotd-bnpolloftheday-ex' );
 		$this->settings_text               = esc_html__( 'Bar Counter Settings', 'bnpotd-bnpolloftheday-ex' );
 		$this->main_css_element            = '%%order_class%%';
+		$this->child_slug                  = 'bnpotd_bnpolloftheday_item_option';
 	}
 
 	function get_fields() {
@@ -32,8 +33,8 @@ class BNPollOfTheDay_Item extends ET_Builder_Module
 	public function render( $attrs, $content = null, $render_slug )
 	{
 		#global $bnpotd_bnpolloftheday_settings;
-		print_r( $bnpotd_bnpolloftheday_settings );
-		exit;
+		#print_r( $bnpotd_bnpolloftheday_settings );
+		#exit;
 
 		return sprintf(
 			

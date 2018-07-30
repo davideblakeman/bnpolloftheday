@@ -25,7 +25,7 @@ class BNPollOfTheDay extends ET_Builder_Module {
 		$this->name = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
 		$this->slug = 'bnpotd_bnpolloftheday';
 		$this->vb_support      = 'on';
-		$this->child_slug      = 'bnpotd_bnpolloftheday_item';
+		#$this->child_slug      = 'bnpotd_bnpolloftheday_item';
 		#$this->child_item_text = esc_html__( 'BN Poll Of The Day', 'bnpotd-bnpolloftheday-ex' );
 
 		/*$this->settings_modal_toggles = array(
@@ -70,23 +70,60 @@ class BNPollOfTheDay extends ET_Builder_Module {
 			),
 		);*/
 
+		$PotdDB = new BNPollOfTheDayDB;
+		#$poll = $PotdDB->getPollById( 1 );
+		$questions = $PotdDB->getAllPollQuestions();
+		$poll[ 'questions' ] = array();
+		
+		#echo '<pre>';
+		#print_r($questions);
+		#exit;
+
+		foreach ( $questions as $q )
+		{
+			$poll[ 'questions' ][ $q->qid ] = $q->question;
+		}
+
+		#echo '<pre>';
+		#print_r( $poll );
+		#exit;
+
 		return array(
-			'content'     => array(
-				'label'           => esc_html__( 'Content', 'bnpotd-bnpolloftheday-ex' ),
-				#'type'            => 'text',
+			'content' => array(
+				'label'           => esc_html__( 'Title', 'bnpotd-bnpolloftheday-ex' ),
 				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'Input your desired heading here.', 'bnpotd-bnpolloftheday-ex' ),
+				'description'     => esc_html__( 'Sets the title for this poll.', 'bnpotd-bnpolloftheday-ex' ),
 				'toggle_slug'     => 'main_content',
+			),
+			'selected_poll'     => array(
+				'label'           => esc_html__( 'Select Poll', 'bnpotd-bnpolloftheday-ex' ),
+				'type'            => 'select',
+				'option_category' => 'basic_option',
+				#'description'     => esc_html__( 'Select the Poll of the Day. Add new polls in the <a href="#">BNPotD Settings page</a>.', 'bnpotd-bnpolloftheday-ex' ),
+				'description'     => 'Select the Poll of the Day. Add new polls on the <a href="#">BNPotD Settings page</a>.',
+				'toggle_slug'     => 'main_content',
+				'options'         => $poll[ 'questions' ]
 			),
 		);
 	}
 
 	public function render( $attrs, $content = null, $render_slug )
 	{
-		#$Potd = new BNPollOfTheDay_Class;
 		$PotdDB = new BNPollOfTheDayDB;
-		$poll = $PotdDB->getPollById( 1 );
+		$selectedPoll = $this->props[ 'selected_poll' ] == "" ? 1 : $this->props[ 'selected_poll' ];
+		$poll = $PotdDB->getPollById( $selectedPoll );
+
+		#echo '<pre>';
+		#print_r( $this->content );
+		#print_r( $selectedPoll );
+		#print_r( $poll );
+		#print_r($this->props[ 'selected_poll' ]);
+		#print_r( $this->props[ 'title' ] );
+		#print_r( $this->content );
+		#exit;
+
+		#$Potd = new BNPollOfTheDay_Class;
 		#$test = $Potd->test();
 		#$test = current_time( 'mysql' );
 		#$test = date( 'Y-m-d H:m:s', time() );
@@ -96,6 +133,8 @@ class BNPollOfTheDay extends ET_Builder_Module {
 		#$test2 = date( 'Y-m-d H:m:s', strtotime( '+1 DAY', current_time( 'timestamp' ) ) );
 		#$test2 = $this->props[ 'content' ];
 		#$test3 = $this->props[ 'test' ];
+		#$title = $this->content;
+		#$title = $this->props[ 'title' ];
 		$title = $this->content;
 		$question = $poll[0]->question;
 		$totalVotes = $poll[0]->vote_count;
@@ -104,17 +143,26 @@ class BNPollOfTheDay extends ET_Builder_Module {
 			<div class="bnpolloftheday_container">
 				<h1>%1$s</h1>
 				<h2>%2$s</h2>
-				<h5>Total Vote Count: %3$s</h5>';
+				<h5>Total Vote Count: %3$s</h5>
+				<div id="Bnpolloftheday_options">';
 
 		foreach( $poll as $p )
 		{
-			$html .= '<p><input type="radio" name=bnpolloftheday_option value="' . $p->oid . '" />' . $p->option . '</p>';
+			$html .= '
+				<p>
+					<label>
+						<input type="radio" name=bnpolloftheday_option value="' . $p->oid . '" />' . $p->option . '
+					</label>
+				</p>';
 		}
 
 		$html .= '
-				<p>
-					<div id="Bnpolloftheday_viewResultsBtn" class="bnpolloftheday_viewResultsBtn">View Results</a>
-				</p>
+				</div>
+				<div class="bnpolloftheday_fc">
+					<!--<div id="Bnpolloftheday_voteBtn" class="bnpolloftheday_btn bnpolloftheday_voteBtn">Vote</div>-->
+					<a href="admin-ajax.php?action=post_love_add_love">Vote!</a>
+					<div id="Bnpolloftheday_viewResultsBtn" class="bnpolloftheday_btn bnpolloftheday_viewResultsBtn">View Results</div>
+				</div>
 				<p>
 					<div class="bnpolloftheday_results bnpotd_collapse"></div>
 				</p>
@@ -126,6 +174,10 @@ class BNPollOfTheDay extends ET_Builder_Module {
 			$question,
 			$totalVotes
 		);
+
+		/*return sprintf(
+			print_r( $this->content )
+		);*/
 
 		/*return sprintf(
 			#print_r($this->get_settings_modal_toggles())

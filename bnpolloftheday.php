@@ -75,6 +75,10 @@ function bnpolloftheday_initScriptStyle()
 	// Enqueue the script
 	wp_enqueue_script( 'bnpolloftheday-custom-script' );
 
+	wp_localize_script( 'bnpolloftheday-custom-script', 'bnpollofthedaypost', array(
+		'ajax_url' => admin_url( 'admin-ajax.php' )
+	));
+
 	// Registers the CSS for the plugin
 	wp_register_style( 'bnpolloftheday-custom-style', plugins_url( '/includes/modules/BNPollOfTheDay/style.css', __FILE__ ), array(), '20180723', 'all' );
 	 // Enqueue the style

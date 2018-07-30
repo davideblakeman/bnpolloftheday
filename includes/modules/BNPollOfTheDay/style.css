@@ -1,10 +1,27 @@
-.bnpolloftheday_viewResultsBtn {
+.bnpolloftheday_btn {
     cursor:pointer;
     height:30px;
     width:100px;
-    background-color:brown;
     display:flex;
     align-items:center;
     justify-content:center;
+    margin: 0 10px 0 10px;
+    /*background-color:brown;
+    color:white;*/
+}
+
+.bnpolloftheday_viewResultsBtn {
+    background-color:darkgreen;
     color:white;
+}
+
+.bnpolloftheday_voteBtn {
+    background-color:brown;
+    color:white;
+}
+
+.bnpolloftheday_fc {
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
