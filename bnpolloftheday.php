@@ -39,6 +39,7 @@ define( 'BNPOLLOFTHEDAY_PATH', plugin_dir_path( BNPOLLOFTHEDAY_MAIN_FILE ) );
 require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/BNPollOfTheDay_Class.php';
 require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/BNPollOfTheDay_DBFunctions.php';
 require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/upgrade-activate-functions.php';
+require_once BNPOLLOFTHEDAY_PATH . 'includes/modules/BNPollOfTheDay/bnpolloftheday_ajax.php';
 
 register_activation_hook( BNPOLLOFTHEDAY_MAIN_FILE, 'bnpolloftheday_activate' );
 
@@ -82,5 +83,12 @@ function bnpolloftheday_initScriptStyle()
 	// Registers the CSS for the plugin
 	wp_register_style( 'bnpolloftheday-custom-style', plugins_url( '/includes/modules/BNPollOfTheDay/style.css', __FILE__ ), array(), '20180723', 'all' );
 	 // Enqueue the style
-	 wp_enqueue_style( 'bnpolloftheday-custom-style' );
+	wp_enqueue_style( 'bnpolloftheday-custom-style' );
 }
+
+//Register callback functions for ajax invocations
+add_action( 'wp_ajax_bnpolloftheday_get', 'bnpolloftheday_ajaxGet' );
+add_action( 'wp_ajax_bnpolloftheday_post', 'bnpolloftheday_ajaxPost' );
+//For non logged in users
+add_action( 'wp_ajax_nopriv_bnpolloftheday_get', 'bnpolloftheday_ajaxGet' );
+add_action( 'wp_ajax_nopriv_bnpolloftheday_post', 'bnpolloftheday_ajaxPost' );

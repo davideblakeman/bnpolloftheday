@@ -159,12 +159,13 @@ class BNPollOfTheDay extends ET_Builder_Module {
 		$html .= '
 				</div>
 				<div class="bnpolloftheday_fc">
-					<!--<div id="Bnpolloftheday_voteBtn" class="bnpolloftheday_btn bnpolloftheday_voteBtn">Vote</div>-->
-					<a href="admin-ajax.php?action=post_love_add_love">Vote!</a>
-					<div id="Bnpolloftheday_viewResultsBtn" class="bnpolloftheday_btn bnpolloftheday_viewResultsBtn">View Results</div>
+					<div id="Bnpolloftheday_voteBtn" class="bnpolloftheday_btn bnpolloftheday_voteBtn">Vote</div>
+					<!--<a href="admin-ajax.php?action=post_love_add_love">Vote!</a>-->
+					<div id="Bnpolloftheday_viewResultsBtn" class="bnpolloftheday_btn bnpolloftheday_viewResultsBtn" value="' . $poll[0]->qid . '">View Results</div>
 				</div>
 				<p>
-					<div class="bnpolloftheday_results bnpotd_collapse"></div>
+					<div id="Bnpolloftheday_results" class="bnpotd_collapse"></div>
+					<div id="Bnpolloftheday_outcome" class="bnpotd_collapse"></div>
 				</p>
 			</div>';
 

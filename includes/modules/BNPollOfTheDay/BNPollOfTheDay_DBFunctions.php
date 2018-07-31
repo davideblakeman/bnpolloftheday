@@ -9,19 +9,25 @@ if ( !defined( 'ABSPATH' ) ) die();
             global $wpdb;
             $wpdb->show_errors();
             #print_r( $wpdb->queries );
-
+            /*$sql = 'SELECT q.qid, q.question, q.vote_count, o.oid, o.option, o.votes 
+                    FROM ' . $wpdb->bnpolloftheday_questions . ' q 
+                    JOIN wp_bnpolloftheday_options o ON q.qid = o.qid
+                    WHERE q.qid = ' . $qid;*/
+            #print_r( $sql );
+            #exit;
             #$result = $wpdb->get_results('SELECT question FROM ' . $wpdb->bnpolloftheday_questions . ' WHERE qid = ' . $qid );
 
             $result = $wpdb->get_results('
                 SELECT q.qid, q.question, q.vote_count, o.oid, o.option, o.votes 
                 FROM ' . $wpdb->bnpolloftheday_questions . ' q 
                 JOIN wp_bnpolloftheday_options o ON q.qid = o.qid
-                WHERE q.qid = ' . $qid
+                WHERE q.qid = ' . $qid . '
+                ORDER BY o.votes DESC'
             );
 
             #echo '<pre>';
             #print_r( $wpdb->queries );
-
+            #return var_dump($result);
             return $result;
         }
 
@@ -36,6 +42,74 @@ if ( !defined( 'ABSPATH' ) ) die();
             ');
 
             return $result;
+        }
+
+        public function postVoteById( $oid )
+        {
+            global $wpdb;
+            $wpdb->show_errors();
+
+            return $wpdb->query(
+                $wpdb->prepare( 
+                    "
+                    UPDATE $wpdb->bnpolloftheday_options 
+                    SET votes = votes + 1
+                    WHERE oid = %d
+                    ",
+                    $oid
+                )
+            );
+        }
+
+        public function getSumOfVotesById( $qid )
+        {
+            global $wpdb;
+            $wpdb->show_errors();
+            
+            /*return $wpdb->query(
+                $wpdb->prepare( 
+                    "
+                    SELECT SUM(votes) as sumofvotes
+                    FROM $wpdb->bnpolloftheday_options 
+                    WHERE qid = %d
+                    ",
+                    $qid
+                )
+            );*/
+
+            /*return $wpdb->query(
+                $wpdb->prepare( 
+                    "
+                    SELECT *
+                    FROM $wpdb->bnpolloftheday_options 
+                    WHERE qid = %d
+                    ",
+                    $qid
+                )
+            );*/
+
+            return $wpdb->get_results(
+                'SELECT SUM(votes) AS sumofvotes FROM ' . $wpdb->bnpolloftheday_options . ' WHERE qid = ' . $qid
+            );
+
+            /*return $wpdb->query(
+                $wpdb->prepare( 
+                    "SELECT SUM(votes) AS sumofvotes FROM " . $wpdb->bnpolloftheday_options . " WHERE qid = %d", $qid
+                )
+            );*/
+
+            /*$results = $wpdb->query(
+                $wpdb->prepare(
+                    "SELECT * FROM " . $wpdb->bnpolloftheday_options . " WHERE qid = %s",
+                    $qid
+                )
+            );*/
+
+            #echo '<pre>';
+            #print_r( $results );
+            #exit;
+
+            #return $results;
         }
 
         public function getOtherDataExample()
